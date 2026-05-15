@@ -12,9 +12,13 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Jost', sans-serif;
+  font-family: 'Jost', 'Noto Sans Arabic', sans-serif;
   background: #f5edd8;
   color: #1a1208;
+}
+
+:dir(rtl) body {
+  font-family: 'Noto Sans Arabic', 'Jost', sans-serif;
 }
 
 button,

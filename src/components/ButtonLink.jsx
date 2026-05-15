@@ -1,6 +1,9 @@
-import { FaArrowRight } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { useLanguage } from '../context/LanguageContext.jsx';
 
 export default function ButtonLink({ href, children, className = '', variant = 'primary' }) {
+  const { isArabic } = useLanguage();
+  const Arrow = isArabic ? FaArrowLeft : FaArrowRight;
   const styles =
     variant === 'light'
       ? 'bg-ivory text-dark hover:bg-white'
@@ -14,7 +17,7 @@ export default function ButtonLink({ href, children, className = '', variant = '
       className={`inline-flex items-center justify-center gap-3 rounded-full px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] transition ${styles} ${className}`}
     >
       {children}
-      <FaArrowRight aria-hidden="true" className="text-xs" />
+      <Arrow aria-hidden="true" className="text-xs" />
     </a>
   );
 }

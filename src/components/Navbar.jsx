@@ -1,16 +1,20 @@
 import { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { NavLink, Link } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext.jsx';
+import { copy } from '../data/translations.js';
 
 const links = [
-  { to: '/', label: 'Accueil' },
-  { to: '/services', label: 'Services' },
-  { to: '/portfolio', label: 'Portfolio' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/', label: 'home' },
+  { to: '/services', label: 'services' },
+  { to: '/portfolio', label: 'portfolio' },
+  { to: '/contact', label: 'contact' },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { language, setLanguage } = useLanguage();
+  const t = copy[language];
 
   const linkClass = ({ isActive }) =>
     `text-sm font-semibold uppercase tracking-[0.18em] transition ${
@@ -26,15 +30,23 @@ export default function Navbar() {
         <div className="hidden items-center gap-8 md:flex">
           {links.map((link) => (
             <NavLink key={link.to} to={link.to} className={linkClass}>
-              {link.label}
+              {t.nav[link.label]}
             </NavLink>
           ))}
+          <button
+            type="button"
+            onClick={() => setLanguage(language === 'fr' ? 'ar' : 'fr')}
+            className="rounded-full border border-dark/15 px-4 py-2 text-sm font-semibold uppercase tracking-[0.16em] text-dark transition hover:border-terracotta hover:text-terracotta"
+            aria-label={t.nav.language}
+          >
+            {language === 'fr' ? 'AR' : 'FR'}
+          </button>
         </div>
         <button
           className="grid h-11 w-11 place-items-center rounded-full border border-dark/15 text-dark md:hidden"
           type="button"
           onClick={() => setOpen((value) => !value)}
-          aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+          aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
         >
           {open ? <FaTimes /> : <FaBars />}
         </button>
@@ -43,9 +55,20 @@ export default function Navbar() {
         <div className="mx-auto grid max-w-7xl gap-4 border-t border-dark/10 py-5 md:hidden">
           {links.map((link) => (
             <NavLink key={link.to} to={link.to} className={linkClass} onClick={() => setOpen(false)}>
-              {link.label}
+              {t.nav[link.label]}
             </NavLink>
           ))}
+          <button
+            type="button"
+            onClick={() => {
+              setLanguage(language === 'fr' ? 'ar' : 'fr');
+              setOpen(false);
+            }}
+            className="w-fit rounded-full border border-dark/15 px-4 py-2 text-sm font-semibold uppercase tracking-[0.16em] text-dark"
+            aria-label={t.nav.language}
+          >
+            {language === 'fr' ? 'AR' : 'FR'}
+          </button>
         </div>
       )}
     </header>

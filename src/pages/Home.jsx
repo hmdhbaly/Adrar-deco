@@ -5,23 +5,22 @@ import ButtonLink from '../components/ButtonLink.jsx';
 import ProjectCard from '../components/ProjectCard.jsx';
 import SectionHeader from '../components/SectionHeader.jsx';
 import ServiceCard from '../components/ServiceCard.jsx';
+import { useLanguage } from '../context/LanguageContext.jsx';
 import { projects } from '../data/projects.js';
 import { services } from '../data/services.js';
-import { defaultMessage, whatsappUrl } from '../utils/whatsapp.js';
-
-const stats = [
-  ['120+', 'projets livres'],
-  ['8 ans', 'de savoir-faire'],
-  ['100%', 'quality'],
-];
+import { copy } from '../data/translations.js';
+import { whatsappUrl } from '../utils/whatsapp.js';
 
 export default function Home() {
+  const { language } = useLanguage();
+  const t = copy[language];
+
   return (
     <AnimatedPage>
       <section className="relative min-h-[92vh] overflow-hidden pt-20 text-white">
         <img
           src="https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1800&q=88"
-          alt="Salon elegant aux tons chaleureux"
+          alt={t.home.heroAlt}
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-dark/88 via-dark/52 to-dark/12" />
@@ -33,7 +32,7 @@ export default function Home() {
               transition={{ duration: 0.55 }}
               className="text-sm font-semibold uppercase tracking-[0.3em] text-sand"
             >
-              Nouakchott / Design / Decoration
+              {t.home.heroEyebrow}
             </motion.p>
             <motion.h1
               initial={{ opacity: 0, y: 28 }}
@@ -49,8 +48,7 @@ export default function Home() {
               transition={{ delay: 0.22, duration: 0.65 }}
               className="mt-6 max-w-2xl text-lg leading-8 text-white/82 md:text-xl"
             >
-              Interieurs sur mesure, meubles nobles et details decoratifs inspires par la chaleur du
-              desert et l'artisanat mauritanien.
+              {t.home.heroText}
             </motion.p>
           </div>
           <motion.div
@@ -59,12 +57,12 @@ export default function Home() {
             transition={{ delay: 0.32, duration: 0.65 }}
             className="mt-9 flex flex-wrap gap-4"
           >
-            <ButtonLink href={whatsappUrl(defaultMessage)}>Demander un devis</ButtonLink>
+            <ButtonLink href={whatsappUrl(t.whatsapp)}>{t.common.quote}</ButtonLink>
             <Link
               to="/portfolio"
               className="inline-flex items-center justify-center rounded-full border border-white/35 px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-white hover:text-dark"
             >
-              Voir le portfolio
+              {t.common.viewPortfolio}
             </Link>
           </motion.div>
         </div>
@@ -72,7 +70,7 @@ export default function Home() {
 
       <section className="bg-dark px-5 py-8 text-sand">
         <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-3">
-          {stats.map(([value, label]) => (
+          {t.home.stats.map(([value, label]) => (
             <div key={label} className="border-l border-terracotta pl-5">
               <p className="font-display text-5xl font-semibold">{value}</p>
               <p className="mt-1 text-sm uppercase tracking-[0.22em] text-sand/70">{label}</p>
@@ -84,9 +82,9 @@ export default function Home() {
       <section className="bg-grain px-5 py-20 md:py-28">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            eyebrow="Nos services"
-            title="Une maison coherente, du plan aux derniers objets."
-            text="Chaque intervention est pensee pour simplifier vos choix, valoriser votre espace et garder une identite chaleureuse."
+            eyebrow={t.home.servicesEyebrow}
+            title={t.home.servicesTitle}
+            text={t.home.servicesText}
           />
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {services.map((service) => (
@@ -100,15 +98,15 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <SectionHeader
-              eyebrow="Portfolio"
-              title="Des espaces calmes, utiles et memorables."
-              text="Une selection de references pour salons, chambres, bureaux et cuisines."
+              eyebrow={t.nav.portfolio}
+              title={t.home.portfolioTitle}
+              text={t.home.portfolioText}
             />
             <Link
               to="/portfolio"
               className="text-sm font-semibold uppercase tracking-[0.22em] text-terracotta transition hover:text-dark"
             >
-              Tout voir
+              {t.common.viewAll}
             </Link>
           </div>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

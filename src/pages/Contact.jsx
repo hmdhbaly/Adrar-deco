@@ -2,27 +2,32 @@ import { FaClock, FaMapMarkerAlt, FaPhoneAlt, FaWhatsapp } from 'react-icons/fa'
 import AnimatedPage from '../components/AnimatedPage.jsx';
 import ButtonLink from '../components/ButtonLink.jsx';
 import SectionHeader from '../components/SectionHeader.jsx';
-import { defaultMessage, whatsappUrl } from '../utils/whatsapp.js';
+import { useLanguage } from '../context/LanguageContext.jsx';
+import { copy } from '../data/translations.js';
+import { whatsappUrl } from '../utils/whatsapp.js';
 
 const contactItems = [
-  { icon: FaPhoneAlt, label: 'Telephone', value: '+222 46 23 85 68' },
-  { icon: FaMapMarkerAlt, label: 'Adresse', value: 'Nouakchott, Mauritanie' },
-  { icon: FaClock, label: 'Horaires', value: 'Lundi - Samedi / 9h00 - 18h00' },
+  { icon: FaPhoneAlt, label: 'phone', value: '+222 46 23 85 68', dir: 'ltr' },
+  { icon: FaMapMarkerAlt, label: 'address', value: 'addressValue' },
+  { icon: FaClock, label: 'hours', value: 'hoursValue' },
 ];
 
 export default function Contact() {
+  const { language } = useLanguage();
+  const t = copy[language];
+
   return (
     <AnimatedPage>
       <section className="bg-grain px-5 pb-20 pt-36 md:pb-28">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div>
             <SectionHeader
-              eyebrow="Contact"
-              title="Parlez-nous de votre projet sur WhatsApp."
-              text="Pas de formulaire, pas d'attente. Envoyez votre idee, vos dimensions ou une photo de la piece, et nous vous repondons directement."
+              eyebrow={t.contact.eyebrow}
+              title={t.contact.title}
+              text={t.contact.text}
             />
-            <ButtonLink href={whatsappUrl(defaultMessage)} className="mt-8">
-              Ouvrir WhatsApp
+            <ButtonLink href={whatsappUrl(t.whatsapp)} className="mt-8">
+              {t.common.whatsapp}
             </ButtonLink>
           </div>
 
@@ -38,9 +43,11 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="text-sm font-semibold uppercase tracking-[0.2em] text-terracotta">
-                        {item.label}
+                        {t.contact[item.label]}
                       </p>
-                      <p className="mt-1 text-lg text-dark">{item.value}</p>
+                      <p className="mt-1 text-lg text-dark" dir={item.dir || undefined}>
+                        {item.value in t.contact ? t.contact[item.value] : item.value}
+                      </p>
                     </div>
                   </div>
                 );
@@ -48,13 +55,13 @@ export default function Contact() {
             </div>
 
             <a
-              href={whatsappUrl(defaultMessage)}
+              href={whatsappUrl(t.whatsapp)}
               target="_blank"
               rel="noreferrer"
               className="mt-6 flex items-center justify-center gap-3 rounded-lg bg-[#25D366] px-6 py-5 text-center text-lg font-semibold text-white transition hover:brightness-95"
             >
               <FaWhatsapp className="text-2xl" aria-hidden="true" />
-              Envoyer un message WhatsApp
+              {t.common.sendWhatsapp}
             </a>
           </div>
         </div>
@@ -63,7 +70,7 @@ export default function Contact() {
       <section className="bg-ivory px-5 pb-20">
         <div className="mx-auto max-w-7xl overflow-hidden rounded-lg shadow-soft">
           <iframe
-            title="Carte de Nouakchott"
+            title={t.contact.mapTitle}
             src="https://www.google.com/maps?q=Nouakchott%2C%20Mauritania&output=embed"
             className="h-[420px] w-full border-0"
             loading="lazy"
