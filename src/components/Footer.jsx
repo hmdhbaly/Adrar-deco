@@ -1,4 +1,4 @@
-import { FaInstagram, FaWhatsapp } from 'react-icons/fa';
+import { FaTiktok, FaWhatsapp } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext.jsx';
 import { copy } from '../data/translations.js';
@@ -51,12 +51,12 @@ export default function Footer() {
             </a>
             <a
               className="grid h-11 w-11 place-items-center rounded-full bg-sand/10 text-xl transition hover:bg-terracotta"
-              href="https://www.instagram.com/"
+              href="https://www.tiktok.com/@adrar_deco_07?_r=1&_t=ZS-96O0DzK8tu9"
               target="_blank"
               rel="noreferrer"
-              aria-label="Instagram"
+              aria-label="TikTok"
             >
-              <FaInstagram />
+              <FaTiktok />
             </a>
           </div>
         </div>
